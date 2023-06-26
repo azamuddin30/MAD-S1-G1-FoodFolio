@@ -1,9 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,11 +34,6 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditRecipeModel());
-
-    _model.nameRecipeController ??= TextEditingController();
-    _model.imagePathController ??= TextEditingController();
-    _model.descriptionRecipeController ??= TextEditingController();
-    _model.recipeDetailController ??= TextEditingController();
   }
 
   @override
@@ -124,14 +121,87 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
+                              Container(
+                                width: 120.0,
+                                height: 120.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
                                 child: Image.network(
-                                  'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-                                  width: 300.0,
-                                  height: 200.0,
+                                  editRecipeRecipeRecord.image,
                                   fit: BoxFit.cover,
                                 ),
+                              ),
+                              FlutterFlowIconButton(
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                borderRadius: 20.0,
+                                borderWidth: 1.0,
+                                buttonSize: 40.0,
+                                fillColor: FlutterFlowTheme.of(context).accent1,
+                                icon: Icon(
+                                  Icons.photo_camera,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24.0,
+                                ),
+                                onPressed: () async {
+                                  final selectedMedia =
+                                      await selectMediaWithSourceBottomSheet(
+                                    context: context,
+                                    allowPhoto: true,
+                                  );
+                                  if (selectedMedia != null &&
+                                      selectedMedia.every((m) =>
+                                          validateFileFormat(
+                                              m.storagePath, context))) {
+                                    setState(
+                                        () => _model.isDataUploading = true);
+                                    var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      selectedUploadedFiles = selectedMedia
+                                          .map((m) => FFUploadedFile(
+                                                name: m.storagePath
+                                                    .split('/')
+                                                    .last,
+                                                bytes: m.bytes,
+                                                height: m.dimensions?.height,
+                                                width: m.dimensions?.width,
+                                                blurHash: m.blurHash,
+                                              ))
+                                          .toList();
+
+                                      downloadUrls = (await Future.wait(
+                                        selectedMedia.map(
+                                          (m) async => await uploadData(
+                                              m.storagePath, m.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      _model.isDataUploading = false;
+                                    }
+                                    if (selectedUploadedFiles.length ==
+                                            selectedMedia.length &&
+                                        downloadUrls.length ==
+                                            selectedMedia.length) {
+                                      setState(() {
+                                        _model.uploadedLocalFile =
+                                            selectedUploadedFiles.first;
+                                        _model.uploadedFileUrl =
+                                            downloadUrls.first;
+                                      });
+                                    } else {
+                                      setState(() {});
+                                      return;
+                                    }
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -140,7 +210,10 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 16.0),
                           child: TextFormField(
-                            controller: _model.nameRecipeController,
+                            controller: _model.nameRecipeController ??=
+                                TextEditingController(
+                              text: editRecipeRecipeRecord.name,
+                            ),
                             textCapitalization: TextCapitalization.words,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -211,78 +284,10 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 16.0),
                           child: TextFormField(
-                            controller: _model.imagePathController,
-                            textCapitalization: TextCapitalization.words,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Your Image Path',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C),
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              hintText: 'URL',
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Color(0xFF57636C),
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFE0E3E7),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFF4B39EF),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFFF5963),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFFF5963),
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 24.0, 0.0, 24.0),
+                            controller: _model.descriptionRecipeController ??=
+                                TextEditingController(
+                              text: editRecipeRecipeRecord.description,
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF14181B),
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            validator: _model.imagePathControllerValidator
-                                .asValidator(context),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 20.0, 16.0),
-                          child: TextFormField(
-                            controller: _model.descriptionRecipeController,
                             textCapitalization: TextCapitalization.words,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -354,7 +359,10 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 12.0),
                           child: TextFormField(
-                            controller: _model.recipeDetailController,
+                            controller: _model.recipeDetailController ??=
+                                TextEditingController(
+                              text: editRecipeRecipeRecord.recipeDetail,
+                            ),
                             textCapitalization: TextCapitalization.sentences,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -437,7 +445,7 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                                       _model.descriptionRecipeController.text,
                                   recipeDetail:
                                       _model.recipeDetailController.text,
-                                  image: _model.imagePathController.text,
+                                  image: _model.uploadedFileUrl,
                                 ));
                                 await showDialog(
                                   context: context,
