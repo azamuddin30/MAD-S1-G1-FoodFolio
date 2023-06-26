@@ -36,9 +36,12 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
     super.initState();
     _model = createModel(context, () => UpdateProfileModel());
 
-    _model.yourNameController ??= TextEditingController();
-    _model.emailtextField2Controller ??= TextEditingController();
-    _model.phoneNrTextFieldController ??= TextEditingController();
+    _model.yourNameController ??=
+        TextEditingController(text: currentUserDisplayName);
+    _model.emailtextField2Controller ??=
+        TextEditingController(text: currentUserEmail);
+    _model.phoneNrTextFieldController ??=
+        TextEditingController(text: currentPhoneNumber);
   }
 
   @override
@@ -275,16 +278,18 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             2.0, 2.0, 2.0, 2.0),
-                                        child: Container(
-                                          width: 90.0,
-                                          height: 90.0,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                            listViewUsersRecord.photoUrl,
-                                            fit: BoxFit.cover,
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Container(
+                                            width: 90.0,
+                                            height: 90.0,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.network(
+                                              currentUserPhoto,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -327,54 +332,58 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 0.0, 20.0, 16.0),
-                            child: TextFormField(
-                              controller: _model.yourNameController,
-                              textCapitalization: TextCapitalization.words,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Your Name',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
+                            child: AuthUserStreamWidget(
+                              builder: (context) => TextFormField(
+                                controller: _model.yourNameController,
+                                textCapitalization: TextCapitalization.words,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Your Name',
+                                  labelStyle:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    width: 2.0,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 24.0, 0.0, 24.0),
                                 ),
-                                filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 24.0, 0.0, 24.0),
+                                style: FlutterFlowTheme.of(context).bodyMedium,
+                                validator: _model.yourNameControllerValidator
+                                    .asValidator(context),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                              validator: _model.yourNameControllerValidator
-                                  .asValidator(context),
                             ),
                           ),
                           Padding(
@@ -434,55 +443,59 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 0.0, 20.0, 16.0),
-                            child: TextFormField(
-                              controller: _model.phoneNrTextFieldController,
-                              textCapitalization: TextCapitalization.words,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Your Phone Number',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
+                            child: AuthUserStreamWidget(
+                              builder: (context) => TextFormField(
+                                controller: _model.phoneNrTextFieldController,
+                                textCapitalization: TextCapitalization.words,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Your Phone Number',
+                                  labelStyle:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).labelMedium,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    width: 2.0,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 24.0, 0.0, 24.0),
                                 ),
-                                filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 24.0, 0.0, 24.0),
+                                style: FlutterFlowTheme.of(context).bodyMedium,
+                                validator: _model
+                                    .phoneNrTextFieldControllerValidator
+                                    .asValidator(context),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                              validator: _model
-                                  .phoneNrTextFieldControllerValidator
-                                  .asValidator(context),
                             ),
                           ),
                           Align(
@@ -518,7 +531,6 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                                             _model.yourNameController.text,
                                         phoneNumber: _model
                                             .phoneNrTextFieldController.text,
-                                        photoUrl: _model.uploadedFileUrl1,
                                       ));
 
                                       context.goNamed('menu');

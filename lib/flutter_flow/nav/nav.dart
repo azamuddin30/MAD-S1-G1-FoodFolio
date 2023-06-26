@@ -123,8 +123,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'menu',
           path: '/menu',
-          builder: (context, params) =>
-              params.isEmpty ? NavBarPage(initialPage: 'menu') : MenuWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'menu')
+              : MenuWidget(
+                  test: params.getParam('test', ParamType.String),
+                ),
         ),
         FFRoute(
           name: 'AddRecipe2',

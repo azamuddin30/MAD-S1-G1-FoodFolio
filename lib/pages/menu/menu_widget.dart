@@ -11,7 +11,13 @@ import 'menu_model.dart';
 export 'menu_model.dart';
 
 class MenuWidget extends StatefulWidget {
-  const MenuWidget({Key? key}) : super(key: key);
+  const MenuWidget({
+    Key? key,
+    String? test,
+  })  : this.test = test ?? 'shaza123@gmail.com',
+        super(key: key);
+
+  final String test;
 
   @override
   _MenuWidgetState createState() => _MenuWidgetState();
@@ -121,7 +127,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                             builder: (context) => ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.network(
-                                currentUserPhoto,
+                                valueOrDefault<String>(
+                                  currentUserPhoto,
+                                  'https://images.unsplash.com/photo-1624258012851-c59960784150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=689&q=80',
+                                ),
                                 width: 80.0,
                                 height: 80.0,
                                 fit: BoxFit.cover,
@@ -140,7 +149,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                currentUserEmail,
+                                valueOrDefault<String>(
+                                  currentUserEmail,
+                                  'test@test.com',
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .headlineSmall
                                     .override(
