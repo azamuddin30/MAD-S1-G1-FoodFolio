@@ -233,7 +233,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                                       .bodyLarge
                                       .override(
                                         fontFamily: 'Plus Jakarta Sans',
-                                        color: Color(0xFF101213),
+                                        color: Colors.black,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                       ),

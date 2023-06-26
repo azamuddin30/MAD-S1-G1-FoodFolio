@@ -272,7 +272,7 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF14181B),
+                                  color: Colors.black,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -346,7 +346,7 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF14181B),
+                                  color: Colors.black,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -421,7 +421,7 @@ class _EditRecipeWidgetState extends State<EditRecipeWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Plus Jakarta Sans',
-                                  color: Color(0xFF14181B),
+                                  color: Colors.black,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
                                 ),

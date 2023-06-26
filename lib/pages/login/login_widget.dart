@@ -235,7 +235,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       .bodyLarge
                                       .override(
                                         fontFamily: 'Plus Jakarta Sans',
-                                        color: Color(0xFF101213),
+                                        color: Colors.black,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -315,7 +315,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       .bodyLarge
                                       .override(
                                         fontFamily: 'Plus Jakarta Sans',
-                                        color: Color(0xFF101213),
+                                        color: Colors.black,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                       ),

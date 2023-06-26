@@ -380,7 +380,12 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                                       EdgeInsetsDirectional.fromSTEB(
                                           20.0, 24.0, 0.0, 24.0),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.black,
+                                    ),
                                 validator: _model.yourNameControllerValidator
                                     .asValidator(context),
                               ),
@@ -434,7 +439,12 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                                 contentPadding: EdgeInsetsDirectional.fromSTEB(
                                     20.0, 24.0, 0.0, 24.0),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.black,
+                                  ),
                               validator: _model
                                   .emailtextField2ControllerValidator
                                   .asValidator(context),
@@ -491,7 +501,12 @@ class _UpdateProfileWidgetState extends State<UpdateProfileWidget> {
                                       EdgeInsetsDirectional.fromSTEB(
                                           20.0, 24.0, 0.0, 24.0),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.black,
+                                    ),
                                 validator: _model
                                     .phoneNrTextFieldControllerValidator
                                     .asValidator(context),

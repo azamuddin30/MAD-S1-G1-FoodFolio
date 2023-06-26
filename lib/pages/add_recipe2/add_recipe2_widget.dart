@@ -63,7 +63,7 @@ class _AddRecipe2WidgetState extends State<AddRecipe2Widget> {
             size: 30.0,
           ),
           onPressed: () async {
-            context.pop();
+            context.pushNamed('Homepage');
           },
         ),
         title: Padding(
@@ -237,10 +237,11 @@ class _AddRecipe2WidgetState extends State<AddRecipe2Widget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF14181B),
+                              color: Colors.black,
                               fontSize: 14.0,
                               fontWeight: FontWeight.normal,
                             ),
+                        cursorColor: Colors.black,
                         validator: _model.nameRecipeControllerValidator
                             .asValidator(context),
                       ),
@@ -304,7 +305,7 @@ class _AddRecipe2WidgetState extends State<AddRecipe2Widget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF14181B),
+                              color: Colors.black,
                               fontSize: 14.0,
                               fontWeight: FontWeight.normal,
                             ),
@@ -371,7 +372,7 @@ class _AddRecipe2WidgetState extends State<AddRecipe2Widget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF14181B),
+                              color: Colors.black,
                               fontSize: 14.0,
                               fontWeight: FontWeight.normal,
                             ),

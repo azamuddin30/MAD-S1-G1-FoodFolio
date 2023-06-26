@@ -268,16 +268,17 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                                 filled: true,
                                                 fillColor: Color(0xFFF1F4F8),
                                               ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyLarge
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: Color(0xFF101213),
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color: Colors.black,
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                               keyboardType:
                                                   TextInputType.emailAddress,
                                               validator: _model
@@ -375,16 +376,17 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                                   ),
                                                 ),
                                               ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyLarge
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: Color(0xFF101213),
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color: Colors.black,
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                               validator: _model
                                                   .passwordControllerValidator
                                                   .asValidator(context),
@@ -480,16 +482,17 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                                   ),
                                                 ),
                                               ),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyLarge
-                                                  .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                    color: Color(0xFF101213),
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color: Colors.black,
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                               validator: _model
                                                   .password2ControllerValidator
                                                   .asValidator(context),
